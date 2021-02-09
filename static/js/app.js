@@ -22,4 +22,28 @@ function buildTable(data) {
             cell.text(val);
         });
     });
+};
+
+function handleClick() {
+    // select datetime id from html tags
+    // .property("value") stores the value into the variable
+    let date = d3.select("#datetime").property("value");
+    let filteredData = tableData;
+
+    // check to see if a date was entered and filter data using that date
+    if (date) {
+        filteredData = filteredData.filter(row => row.datetime ===date);
+    };
+
+    // Rebuild the table using the filtered data.
+    // @ NOTE: If no date was entered, tehn filteredData will
+    // just be the original tableData.
+    buildTable(filteredData);
 }
+
+// Create an event to listen for a button click
+d3.selectAll("#filter-btn").on("click", handleClick);
+
+// Build the table when the page loads
+buildTable(tableData);
+
